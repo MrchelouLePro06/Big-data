@@ -1,0 +1,14 @@
+rs.status()
+rs.stepDown()
+rs.status()
+})
+  ]
+    { _id: 2, host: "shard1c:27119" }
+    { _id: 1, host: "shard1b:27118" },
+    { _id: 0, host: "shard1a:27117" },
+  members: [
+  _id: "shard1ReplSet",
+rs.initiate({
+sh.addShard("shard3ReplSet/shard3svr1:27018,shard3svr2:27018,shard3svr3:27018")
+sh.addShard("shard2ReplSet/shard2svr1:27018,shard2svr2:27018,shard2svr3:27018")
+sh.addShard("shard1ReplSet/shard1svr1:27018,shard1svr2:27018,shard1svr3:27018")

@@ -1,7 +1,9 @@
 version: '3.8'
 
 services:
-  # Config Server Replica Set
+  # docker run -it --network bd_default --rm mongo mongosh --host configsvr1 --port 27019
+  #docker exec -it mongos mongosh --port 27020
+  #docker exec -it shard1a mongosh --port 27117
   configsvr1:
     image: mongo:6.0
     container_name: configsvr1
@@ -119,3 +121,8 @@ services:
             --bind_ip_all --port 27020
     ports:
       - "27020:27020"
+  mongosh:
+    image: mongo
+    entrypoint: ["mongosh"]
+    stdin_open: true
+    tty: true
