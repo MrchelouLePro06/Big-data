@@ -2,7 +2,7 @@ package projet.bd.src;
 import org.bson.Document;
 
 public class Vol {
-    private int id_vol;
+    private String id_vol;
     private String numero_vol_base;
     private String date_depart;
     private String date_arrivee;
@@ -14,7 +14,7 @@ public class Vol {
     private Pilote equipage;
     private int id_opl;
 
-    public Vol(int id_vol, String numero_vol_base, String date_depart, String date_arrivee, String statut,
+    public Vol(String id_vol, String numero_vol_base, String date_depart, String date_arrivee, String statut,
                Compagnie compagnie, Aeroport aeroport_depart, Aeroport aeroport_arrivee,
                Avion avion, Pilote equipage, int id_opl) {
         this.id_vol = id_vol;
@@ -43,11 +43,11 @@ public class Vol {
                 .append("equipage", equipage.toDocument());
     }
 
-    public int getId_vol() {
+    public String getId_vol() {
         return id_vol;
     }
 
-    public void setId_vol(int id_vol) {
+    public void setId_vol(String id_vol) {
         this.id_vol = id_vol;
     }
 

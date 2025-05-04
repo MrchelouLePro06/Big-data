@@ -10,9 +10,9 @@ public class Passager {
     private String prenom;
     private String email;
     private String date_naissance;
-    private int telephone;
+    private String telephone;
 
-    public Passager(int id, String nom, String prenom, String email, int telephone,String date_naissance) {
+    public Passager(int id, String nom, String prenom, String email, String telephone,String date_naissance) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -62,7 +62,7 @@ public class Passager {
         this.email = email;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
@@ -74,7 +74,7 @@ public class Passager {
         this.date_naissance = date_naissance;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 }

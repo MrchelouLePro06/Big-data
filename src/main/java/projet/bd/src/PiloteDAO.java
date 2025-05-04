@@ -15,7 +15,23 @@ public class PiloteDAO {
     }
 
     public void insertPilote(Pilote pilote) {
-        collection.insertOne(pilote.toDocument());
+        if (findById(pilote.getId()) == null) {
+            collection.insertOne(pilote.toDocument());
+            System.out.println("Pilote inséré avec succès.");
+        } else {
+            System.out.println("Le pilote avec l'ID " + pilote.getId() + " existe déjà.");
+        }
+    }
+
+    public Pilote findById(String id) {
+        Document doc = collection.find(Filters.eq("id", id)).first();
+        if (doc != null) {
+            return new Pilote(
+                    doc.getInteger("id"),
+                    doc.getString("nom")
+            );
+        }
+        return null;
     }
 
     public void insertPilotes(List<Pilote> pilotes) {

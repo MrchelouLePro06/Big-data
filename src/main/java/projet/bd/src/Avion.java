@@ -3,12 +3,12 @@ package projet.bd.src;
 import org.bson.Document;
 
 public class Avion {
-    private int id_avion;
+    private String id_avion;
     private String modele;
     private int capacite;
-    private Compagnie compagnie;
+    private int compagnie;
 
-    public Avion(int id_avion, String modele, int capacite, Compagnie compagnie) {
+    public Avion(String id_avion, String modele, int capacite, int compagnie) {
         this.id_avion = id_avion;
         this.modele = modele;
         this.capacite = capacite;
@@ -19,14 +19,14 @@ public class Avion {
         return new Document("id_avion", id_avion)
                 .append("modele", modele)
                 .append("capacite", capacite)
-                .append("compagnie", compagnie.toDocument());
+                .append("id_compagnie", compagnie);
     }
 
-    public int getId_avion() {
+    public String getId_avion() {
         return id_avion;
     }
 
-    public void setId_avion(int id_avion) {
+    public void setId_avion(String id_avion) {
         this.id_avion = id_avion;
     }
 
@@ -46,11 +46,11 @@ public class Avion {
         this.capacite = capacite;
     }
 
-    public Compagnie getCompagnie() {
+    public int getCompagnie() {
         return compagnie;
     }
 
-    public void setCompagnie(Compagnie compagnie) {
+    public void setCompagnie(int compagnie) {
         this.compagnie = compagnie;
     }
 }

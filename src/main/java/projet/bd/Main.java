@@ -13,19 +13,24 @@ public class Main {
         MongoClient client = MongoClients.create("mongodb://localhost:27017");
         MongoDatabase database = client.getDatabase("bd_aviation");
 
-        VolDAO vd = new VolDAO(database);
-        Compagnie compagnie = new Compagnie(213, "Air Algerie", "TeamDZ");
-        Aeroport depart = new Aeroport(213, "Boumedienne", "Alger", "Algerie");
-        Aeroport arrivee = new Aeroport(212, "aeroportMaroc", "Rabat", "Maroc");
-        Avion avion = new Avion(1000, "A320", 150, compagnie);
+        //test aeroports
+        AeroportDAO aeroportDAO = new AeroportDAO(database);
+        Aeroport tahiadz = new Aeroport("ALG213", "Boumedienne", "Alger", "Algerie");
+        aeroportDAO.insertAeroport(tahiadz);
+        System.out.println(aeroportDAO.findById("ALG213").toDocument().toJson());
+        aeroportDAO.deleteAeroport("ALG213");
+        System.out.println(aeroportDAO.findById("ALG213"));
 
-        vd.insertVol(new Vol(10000, "2024-01-01", "2024-01-02","Parti",compagnie,depart,arrivee,avion,));
+        //test passager
+        PassagerDAO passagerDAO = new PassagerDAO(database);
+        Passager steve=new Passager(213,"Mansour","Mehdi","Mehdi.Mansour@fac.com","0102030405","01/03/2002");
+        passagerDAO.insertPassager(steve);
         // Test vols
         VolAggregationDAO vad = new VolAggregationDAO(database);
         // Vols entre deux dates
         System.out.println("=== Vols entre deux dates ===");
-        List<Document> volsEntreDates = vad.getVolsEntreDates("2024-01-01", "2024-12-31");
-        volsEntreDates.forEach(doc -> System.out.println(doc.toJson()));
+        List<Document> volsEntreDates = vad.getVolsEntreDates("2025-01-01", "2025-06-1");
+        //volsEntreDates.forEach(doc -> System.out.println(doc.toJson()));
 
 
 

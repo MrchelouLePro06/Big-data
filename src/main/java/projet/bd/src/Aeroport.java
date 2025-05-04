@@ -3,12 +3,12 @@ package projet.bd.src;
 import org.bson.Document;
 
 public class Aeroport {
-    private int id_aeroport;
+    private String id_aeroport;
     private String nom;
     private String ville;
     private String pays;
 
-    public Aeroport(int id_aeroport, String nom, String ville, String pays) {
+    public Aeroport(String id_aeroport, String nom, String ville, String pays) {
         this.id_aeroport = id_aeroport;
         this.nom = nom;
         this.ville = ville;
@@ -22,11 +22,20 @@ public class Aeroport {
                 .append("pays", pays);
     }
 
-    public int getId_aeroport() {
+    public static Aeroport fromDocument(Document doc) {
+        String id = doc.getString("_id");
+        String nom = doc.getString("nom");
+        String ville = doc.getString("ville");
+        String pays = doc.getString("pays");
+        return new Aeroport(id, nom, ville, pays);
+    }
+
+
+    public String getId_aeroport() {
         return id_aeroport;
     }
 
-    public void setId_aeroport(int id_aeroport) {
+    public void setId_aeroport(String id_aeroport) {
         this.id_aeroport = id_aeroport;
     }
 

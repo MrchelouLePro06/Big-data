@@ -25,11 +25,11 @@ public class ReservationDAO {
         collection.insertMany(documents);
     }
 
-    public void updateReservation(int pnr, String field, Object newValue) {
+    public void updateReservation(String pnr, String field, Object newValue) {
         collection.updateOne(Filters.eq("pnr", pnr), Updates.set(field, newValue));
     }
 
-    public void deleteReservation(int pnr) {
+    public void deleteReservation(String pnr) {
         collection.deleteOne(Filters.eq("pnr", pnr));
     }
 }

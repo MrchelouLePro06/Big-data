@@ -15,7 +15,26 @@ public class PassagerDAO {
     }
 
     public void insertPassager(Passager passager) {
-        collection.insertOne(passager.toDocument());
+        if (findById(passager.getId()) == null) {
+            collection.insertOne(passager.toDocument());
+            System.out.println("passager inséré avec succès.");
+        } else {
+            System.out.println("Le passager avec l'ID " + passager.getId() + " existe déjà.");
+        }
+    }
+    public Passager findById(int id) {
+        Document doc = collection.find(Filters.eq("id", id)).first();
+        if (doc != null) {
+            return new Passager(
+                    doc.getInteger("id"),
+                    doc.getString("nom"),
+                    doc.getString("prenom"),
+                    doc.getString("email"),
+                    doc.getString("telephone"),
+                    doc.getString("date_naissance")
+            );
+        }
+        return null;
     }
 
     public void insertPassagers(List<Passager> passagers) {

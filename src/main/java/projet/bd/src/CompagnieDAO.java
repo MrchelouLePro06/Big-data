@@ -15,7 +15,24 @@ public class CompagnieDAO {
     }
 
     public void insertCompagnie(Compagnie compagnie) {
-        collection.insertOne(compagnie.toDocument());
+        if (findById(compagnie.getId_compagnie()) == null) {
+            collection.insertOne(compagnie.toDocument());
+            System.out.println("Compagnie insérée avec succès.");
+        } else {
+            System.out.println("La compagnie avec l'ID " + compagnie.getId_compagnie() + " existe déjà.");
+        }
+    }
+
+    public Compagnie findById(String id) {
+        Document doc = collection.find(Filters.eq("id_compagnie", id)).first();
+        if (doc != null) {
+            return new Compagnie(
+                    doc.getString("id_compagnie"),
+                    doc.getString("nom"),
+                    doc.getString("alliance")
+            );
+        }
+        return null;
     }
 
     public void insertCompagnies(List<Compagnie> compagnies) {
@@ -25,11 +42,11 @@ public class CompagnieDAO {
         collection.insertMany(documents);
     }
 
-    public void updateCompagnie(int idCompagnie, String field, Object newValue) {
+    public void updateCompagnie(String idCompagnie, String field, Object newValue) {
         collection.updateOne(Filters.eq("id_compagnie", idCompagnie), Updates.set(field, newValue));
     }
 
-    public void deleteCompagnie(int idCompagnie) {
+    public void deleteCompagnie(String idCompagnie) {
         collection.deleteOne(Filters.eq("id_compagnie", idCompagnie));
     }
 }

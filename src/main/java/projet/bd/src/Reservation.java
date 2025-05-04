@@ -3,7 +3,7 @@ package projet.bd.src;
 import org.bson.Document;
 
 public class Reservation {
-    private int pnr;
+    private String pnr;
     private String date_reservation;
     private String classe;
     private int siege;
@@ -11,7 +11,7 @@ public class Reservation {
     private Vol vol;
     private Compagnie compagnie;
 
-    public Reservation(int pnr, String date_reservation, String classe, int siege, Passager passager, Vol vol, Compagnie compagnie) {
+    public Reservation(String pnr, String date_reservation, String classe, int siege, Passager passager, Vol vol, Compagnie compagnie) {
         this.pnr = pnr;
         this.date_reservation = date_reservation;
         this.classe = classe;
@@ -31,11 +31,11 @@ public class Reservation {
                 .append("compagnie", compagnie.toDocument());
     }
 
-    public int getPnr() {
+    public String getPnr() {
         return pnr;
     }
 
-    public void setPnr(int pnr) {
+    public void setPnr(String pnr) {
         this.pnr = pnr;
     }
 

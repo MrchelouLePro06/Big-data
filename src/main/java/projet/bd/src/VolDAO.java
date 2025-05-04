@@ -28,12 +28,12 @@ public class VolDAO {
     }
 
     // Modifier un enregistrement
-    public void updateVol(int idVol, String field, Object newValue) {
+    public void updateVol(String idVol, String field, Object newValue) {
         collection.updateOne(Filters.eq("_id", idVol), Updates.set(field, newValue));
     }
 
     // Supprimer un enregistrement
-    public void deleteVol(int idVol) {
+    public void deleteVol(String idVol) {
         collection.deleteOne(Filters.eq("_id", idVol));
     }
 

@@ -15,9 +15,25 @@ public class AvionDAO {
     }
 
     public void insertAvion(Avion avion) {
-        collection.insertOne(avion.toDocument());
+        if (findById(avion.getId_avion()) == null) {
+            collection.insertOne(avion.toDocument());
+            System.out.println("Avion inséré avec succès.");
+        } else {
+            System.out.println("L'avion avec l'ID " + avion.getId_avion() + " existe déjà.");
+        }
     }
-
+    public Avion findById(String id) {
+        Document doc = collection.find(Filters.eq("id_avion", id)).first();
+        if (doc != null) {
+            return new Avion(
+                    doc.getString("id_avion"),
+                    doc.getString("modele"),
+                    doc.getInteger("capacite"),
+                    doc.getInteger("id_compagnie")
+            );
+        }
+        return null;
+    }
     public void insertAvions(List<Avion> avions) {
         List<Document> documents = avions.stream()
                 .map(Avion::toDocument)
@@ -25,11 +41,11 @@ public class AvionDAO {
         collection.insertMany(documents);
     }
 
-    public void updateAvion(int idAvion, String field, Object newValue) {
+    public void updateAvion(String idAvion, String field, Object newValue) {
         collection.updateOne(Filters.eq("id_avion", idAvion), Updates.set(field, newValue));
     }
 
-    public void deleteAvion(int idAvion) {
+    public void deleteAvion(String idAvion) {
         collection.deleteOne(Filters.eq("id_avion", idAvion));
     }
 }

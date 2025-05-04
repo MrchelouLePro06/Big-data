@@ -6,6 +6,8 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import java.util.List;
+import static com.mongodb.client.model.Filters.eq;
+
 
 public class AeroportDAO {
     private final MongoCollection<Document> collection;
@@ -15,7 +17,12 @@ public class AeroportDAO {
     }
 
     public void insertAeroport(Aeroport aeroport) {
-        collection.insertOne(aeroport.toDocument());
+        if (findById(aeroport.getId_aeroport()) == null) {
+            collection.insertOne(aeroport.toDocument());
+            System.out.println("Aéroport inséré avec succès.");
+        } else {
+            System.out.println("L'aéroport avec l'ID " + aeroport.getId_aeroport() + " existe déjà.");
+        }
     }
 
     public void insertAeroports(List<Aeroport> aeroports) {
@@ -25,11 +32,20 @@ public class AeroportDAO {
         collection.insertMany(documents);
     }
 
-    public void updateAeroport(int idAeroport, String field, Object newValue) {
+    public void updateAeroport(String idAeroport, String field, Object newValue) {
         collection.updateOne(Filters.eq("_id", idAeroport), Updates.set(field, newValue));
     }
 
-    public void deleteAeroport(int idAeroport) {
+    public void deleteAeroport(String idAeroport) {
         collection.deleteOne(Filters.eq("_id", idAeroport));
     }
+
+    public Aeroport findById(String id) {
+        Document doc = collection.find(eq("_id", id)).first();
+        if (doc != null) {
+            return Aeroport.fromDocument(doc);
+        }
+        return null;
+    }
+
 }
