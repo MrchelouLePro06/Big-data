@@ -18,8 +18,15 @@ public class Main {
         Aeroport tahiadz = new Aeroport("ALG213", "Boumedienne", "Alger", "Algerie");
         aeroportDAO.insertAeroport(tahiadz);
         System.out.println(aeroportDAO.findById("ALG213").toDocument().toJson());
-        aeroportDAO.deleteAeroport("ALG213");
-        System.out.println(aeroportDAO.findById("ALG213"));
+        // aeroportDAO.deleteAeroport("ALG213");
+        //System.out.println(aeroportDAO.findById("ALG213"));
+
+        AeroportAggregationDAO aadao= new AeroportAggregationDAO(database);
+        System.out.println("=== Nombre de vols par aéroport ===");
+        List<Document> volsParAeroport = aadao.countVolsParAeroport();
+        for (Document doc : volsParAeroport) {
+            System.out.println(doc.toJson());
+        }
 
         //test passager
         PassagerDAO passagerDAO = new PassagerDAO(database);
@@ -28,14 +35,10 @@ public class Main {
         System.out.println(passagerDAO.findById(steve.getId()).toDocument().toJson());
         // Test vols
         VolAggregationDAO vad = new VolAggregationDAO(database);
-        // Vols entre deux dates
         System.out.println("=== Vols entre deux dates ===");
         List<Document> volsEntreDates = vad.getVolsEntreDates("2025-01-01", "2025-06-1");
         //volsEntreDates.forEach(doc -> System.out.println(doc.toJson()));
 
-
-
-        // Fermeture de la connexion
         client.close();
     }
 }

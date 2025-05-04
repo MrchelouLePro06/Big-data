@@ -18,26 +18,31 @@ public class AeroportAggregationDAO {
 
     // 1. Nombre de vols par aéroport
     public List<Document> countVolsParAeroport() {
+        // Pipeline d'agrégation
         List<Bson> pipeline = Arrays.asList(
-                Aggregates.lookup("vols", "_id", "aeroport_depart._id", "vols_depart"),
-                Aggregates.lookup("vols", "_id", "aeroport_arrivee._id", "vols_arrivee"),
+                Aggregates.limit(100),
+                Aggregates.lookup("vols", "_id", "aeroport_depart.id", "vols_depart"),
+                Aggregates.lookup("vols", "_id", "aeroport_arrivee.id", "vols_arrivee"),
                 Aggregates.project(Projections.fields(
-                        Projections.include("nom"),
-                        Projections.computed("total_vols",
+                        Projections.include("nom", "ville", "pays"),
+                        Projections.computed("nombre_vols",
                                 new Document("$add", Arrays.asList(
                                         new Document("$size", "$vols_depart"),
                                         new Document("$size", "$vols_arrivee")
                                 ))
                         )
                 )),
-                Aggregates.sort(Sorts.descending("total_vols"))
+                Aggregates.sort(Sorts.descending("nombre_vols"))
         );
+
+        // Exécution de l'agrégation
         return collection.aggregate(pipeline).into(new ArrayList<>());
     }
 
     // 2. Aéroports les plus fréquentés par période
     public List<Document> aeroportsFrequentes(String dateDebut, String dateFin) {
         List<Bson> pipeline = Arrays.asList(
+                Aggregates.limit(100),
                 Aggregates.lookup("vols", "_id", "aeroport_depart._id", "vols"),
                 Aggregates.match(Filters.and(
                         Filters.gte("vols.date_depart", dateDebut),
