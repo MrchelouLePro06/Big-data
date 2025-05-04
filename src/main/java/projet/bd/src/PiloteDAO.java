@@ -15,15 +15,15 @@ public class PiloteDAO {
     }
 
     public void insertPilote(Pilote pilote) {
-        if (findById(pilote.getId()) == null) {
+        if (!(findById(pilote.getId_pilote()) == null)) {
             collection.insertOne(pilote.toDocument());
             System.out.println("Pilote inséré avec succès.");
         } else {
-            System.out.println("Le pilote avec l'ID " + pilote.getId() + " existe déjà.");
+            System.out.println("Le pilote avec l'ID " + pilote.getId_pilote() + " existe déjà.");
         }
     }
 
-    public Pilote findById(String id) {
+    public Pilote findById(int id) {
         Document doc = collection.find(Filters.eq("id", id)).first();
         if (doc != null) {
             return new Pilote(

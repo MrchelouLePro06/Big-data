@@ -25,6 +25,7 @@ public class Main {
         PassagerDAO passagerDAO = new PassagerDAO(database);
         Passager steve=new Passager(213,"Mansour","Mehdi","Mehdi.Mansour@fac.com","0102030405","01/03/2002");
         passagerDAO.insertPassager(steve);
+        System.out.println(passagerDAO.findById(steve.getId()).toDocument().toJson());
         // Test vols
         VolAggregationDAO vad = new VolAggregationDAO(database);
         // Vols entre deux dates
